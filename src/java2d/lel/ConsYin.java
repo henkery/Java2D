@@ -1,6 +1,7 @@
 package java2d.lel;
 
 import java.awt.*;
+
 import javax.swing.*;
 import java.awt.geom.*;
 
@@ -32,16 +33,26 @@ class ConsPanel2 extends JPanel {
 	{
 		super.paintComponents(g);
 		Graphics2D g2 = (Graphics2D)g;
-		Shape s1 = new Ellipse2D.Double(50, 50, 200, 200);
+		Shape s1 = new Arc2D.Double(50, 50, 200, 200, 90, 180, Arc2D.CHORD);
 		Shape s2 = new Ellipse2D.Double(100, 50, 100, 100);
 		Shape s3 = new Ellipse2D.Double(100, 150, 100, 100);
-		//Shape s2 = new CubicCurve2D.Double(150, 50, 150, 50, 150, 50, 150, 250);
-		//Shape s2 = new Ellipse2D.Double(145, 120, 135, 105);
+		Shape s4 = new Arc2D.Double(50, 50, 200, 200, 270, 180, Arc2D.CHORD);
+		Shape s5 = new Ellipse2D.Double(145, 95, 10, 10);
+		Shape s6 = new Ellipse2D.Double(145, 195, 10, 10);
 		Area shape = new Area(s1);
-		shape.exclusiveOr(new Area(s2));
-		shape.exclusiveOr(new Area(s3));
+		shape.add(new Area(s2));
+		shape.subtract(new Area(s3));
+		shape.subtract(new Area(s5));
+		Area shape2 = new Area(s4);
+		shape2.subtract(new Area(s2));
+		shape2.add(new Area(s3));
+		shape2.subtract(new Area(s6));
+		g2.setPaint(Color.white);
 		g2.fill(shape);
-		//g2.draw(shape);
+		g2.fill(s6);
+		g2.setPaint(Color.black);
+		g2.fill(shape2);
+		g2.fill(s5);
 		
 	}
 }
